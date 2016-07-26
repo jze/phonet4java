@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
 
 /**
@@ -71,10 +71,10 @@ public class DaitchMokotoff implements Coder {
         };
 
     /**
-      * @see com.googlecode.phonet4java.Coder#code(java.lang.String)
+      * @see Coder#code(java.lang.String)
       */
     public String code(final String input) {
-        if ((input == null) || input.trim().isEmpty()) {
+        if ((input == null) || input.trim().length() == 0) {
             return "000000";
         }
 
@@ -83,7 +83,7 @@ public class DaitchMokotoff implements Coder {
         int pos = 0;
         String sound;
         String lastSound = null;
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         String in = input.toUpperCase() + "*";
 

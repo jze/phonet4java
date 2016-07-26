@@ -1,5 +1,5 @@
 /*
- * Coder.java
+ * Phonet2.java
  * 
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
@@ -18,12 +18,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
+
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  *
  */
-public interface Coder {
-    String code(final String input);
+public class Phonet2 extends Phonet implements Coder {
+    /**
+     * @see Coder#code(java.lang.String)
+     */
+    public String code(final String input) {
+        return this.phonet(input, 2);
+    }
 }

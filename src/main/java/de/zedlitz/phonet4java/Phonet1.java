@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
 
 /**
@@ -27,9 +27,8 @@ package com.googlecode.phonet4java;
  */
 public class Phonet1 extends Phonet implements Coder {
     /**
-      * @see com.googlecode.phonet4java.Coder#code(java.lang.String)
+      * @see Coder#code(java.lang.String)
       */
-    @Override
     public String code(final String input) {
         return this.phonet(input, 1);
     }

@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
 
 /**
@@ -34,7 +34,7 @@ package com.googlecode.phonet4java;
  */
 public class KoelnerPhonetik implements Coder {
     /**
-      * @see com.googlecode.phonet4java.Coder#code(java.lang.String)
+      * @see Coder#code(java.lang.String)
       */
     public String code(final String input) {
         if ((input == null) || (input.length() == 0)) {
@@ -43,7 +43,7 @@ public class KoelnerPhonetik implements Coder {
 
         String word = input.toLowerCase();
 
-        StringBuffer code = new StringBuffer();
+        StringBuilder code = new StringBuilder();
         boolean beginningOfWord = true;
 
         for (int i = 0; i < word.length(); i++) {
@@ -53,8 +53,6 @@ public class KoelnerPhonetik implements Coder {
                     (c == 'o') || (c == 'u') || (c == 'y') || (c == 'ä') ||
                     (c == 'ö') || (c == 'ü')) {
                 code.append(0);
-            } else if (c == 'h') {
-                // ignore h
             } else if (c == 'b') {
                 code.append(1);
             } else if ((c == 'f') || (c == 'v') || (c == 'w')) {
@@ -90,6 +88,7 @@ public class KoelnerPhonetik implements Coder {
                     code.append(8);
                 } else {
                     code.append(4);
+                    code.append(8);
                 }
             } else if (c == 'c') {
                 if (beginningOfWord) {
@@ -125,9 +124,9 @@ public class KoelnerPhonetik implements Coder {
                         code.append(8);
                     }
                 }
-            } else if ((c == ' ') || (c == '-') || (c == '/') || (c == ',')) {
+            } /*else if ((c == ' ') || (c == '-') || (c == '/') || (c == ',')) {
                 beginningOfWord = true;
-            }
+            }   */
 
             beginningOfWord = false;
         }
@@ -163,32 +162,18 @@ public class KoelnerPhonetik implements Coder {
 
     /**
      * Check if the letter at positoin (i+1) == letter.
-     * @param s
-     * @param i
-     * @param letter
-     * @return
-     */
+        */
     private boolean isNextLetter(final String s, final int i, final char letter) {
-        if (s.length() > (i + 1)) {
-            return s.charAt(i + 1) == letter;
-        }
+        return s.length() > (i + 1) && s.charAt(i + 1) == letter;
 
-        return false;
     }
 
     /**
      * Check if the letter at positoin (i-1) == letter.
-     * @param s
-     * @param i
-     * @param letter
-     * @return
-     */
+      */
     private boolean isPreviousLetter(final String s, final int i,
         final char letter) {
-        if (i > 1) {
-            return s.charAt(i - 1) == letter;
-        }
+        return i >= 1 && s.charAt(i - 1) == letter;
 
-        return false;
     }
 }

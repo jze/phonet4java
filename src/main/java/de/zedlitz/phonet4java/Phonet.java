@@ -21,7 +21,7 @@
  * MA 02110-1301  USA
  */
 
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
@@ -37,17 +37,18 @@ public class Phonet {
         "àáâãåäæçðèéêëìíîïñòóôõöøßþùúûüýÿ";
     private static final String letters_a_to_z = "abcdefghijklmnopqrstuvwxyz";
     private static final String letters_A_to_Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final char INVALID_CHARACTER = '_';
 
     /**
      * Output debug information if set <code>true</code>.
      */
     boolean trace = false;
-    private final char[] upperchar = new char[HASH_COUNT];
-    private final int[] isletter = new int[HASH_COUNT];
-    private final int[] phonet_hash = new int[512];
+   // private final char[] upperchar = new char[HASH_COUNT];
+   // private final int[] isletter = new int[HASH_COUNT];
+    private final int[] phonet_hash = new int[HASH_COUNT];
     private final int[] alpha_pos = new int[HASH_COUNT];
-    int[][] phonet_hash_1 = new int[26][28];
-    int[][] phonet_hash_2 = new int[26][28];
+    private int[][] phonet_hash_1 = new int[26][28];
+    private int[][] phonet_hash_2 = new int[26][28];
 
     /**
      *
@@ -69,9 +70,7 @@ public class Phonet {
 
     /**
      * Remove the first character of a String.
-     * @param s
-     * @return
-     */
+      */
     private String removeFirst(final String s) {
         String result;
 
@@ -90,9 +89,6 @@ public class Phonet {
 
     /**
      * Return the pos's character, 0 is the String is to short or null
-     * @param s
-     * @param pos
-     * @return
      */
     private char charAt(final String s, final int pos) {
         char result = 0;
@@ -103,13 +99,26 @@ public class Phonet {
 
         return result;
     }
+    
+    private int alphaPos(char i ) {
+        if( i >= HASH_COUNT) {
+            return alpha_pos[INVALID_CHARACTER];
+        }
+        return   alpha_pos[i];
+    }
+
+    private int phonetHash(char i ) {
+        if( i >= HASH_COUNT) {
+            return phonet_hash[INVALID_CHARACTER];
+        }
+        return   phonet_hash[i];
+    }
+
 
     private void initialize_phonet() {
         /****  generate arrays "alpha_pos", "upperchar" and "isletter"  ****/
         for (int i = 0; i < HASH_COUNT; i++) {
             alpha_pos[i] = 0;
-            isletter[i] = 0;
-            upperchar[i] = (char) i;
         }
         /* German and international umlauts  */
         {
@@ -121,14 +130,10 @@ public class Phonet {
                 /* s2 */
                 char n = s2.charAt(i);
                 alpha_pos[n] = -1 + 2;
-                isletter[n] = 2;
-                upperchar[n] = s2.charAt(i);
 
                 /* s */
                 n = s.charAt(i);
                 alpha_pos[n] = -1 + 2;
-                isletter[n] = 1;
-                upperchar[n] = s2.charAt(i);
             }
         }
         /*  "normal" letters ('a'-'z' and 'A'-'Z')  */
@@ -141,14 +146,10 @@ public class Phonet {
                 /* s2 */
                 char n = s2.charAt(i);
                 alpha_pos[n] = i + 2;
-                isletter[n] = 2;
-                upperchar[n] = s2.charAt(i);
 
                 /* s */
                 n = s.charAt(i);
                 alpha_pos[n] = i + 2;
-                isletter[n] = 1;
-                upperchar[n] = s2.charAt(i);
             }
         }
 
@@ -232,7 +233,7 @@ public class Phonet {
     }
 
     private String toUpperCase(final String s) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -270,7 +271,7 @@ public class Phonet {
         String s;
         String dest = input;
 
-        if ((input == null) || (input.length() <= 0)) {
+        if ((input == null) || (input.length() == 0)) {
             return "";
         }
 
@@ -297,7 +298,7 @@ public class Phonet {
             int start2;
             int end1;
             int end2;
-            n = alpha_pos[c];
+            n = alphaPos(c);
 
             if (n >= 2) {
                 int[] p_hash1 = phonet_hash_1[n - 2];
@@ -306,7 +307,7 @@ public class Phonet {
                 if ((i + 1) == src.length()) {
                     n = alpha_pos[0];
                 } else {
-                    n = alpha_pos[src.charAt(i + 1)];
+                    n = alphaPos(src.charAt(i + 1));
                 }
 
                 start1 = p_hash1[n];
@@ -333,7 +334,7 @@ public class Phonet {
                     end2 = -1;
                 }
             } else {
-                n = phonet_hash[c];
+                n = phonetHash(c);
                 start1 = n;
                 end1 = 10000;
                 start2 = -1;
@@ -350,7 +351,6 @@ public class Phonet {
                     if (n > end1) {
                         if (start2 > 0) {
                             n = start2;
-                            start1 = start2;
                             start2 = -1;
                             end1 = end2;
                             end2 = -1;
@@ -383,7 +383,7 @@ public class Phonet {
                             (src.length() > (i + k)) &&
                             (src.charAt(i + k) == s.charAt(0)) &&
                             !Character.isDigit(s.charAt(0)) &&
-                            ("(-<^$".indexOf(s) == -1)) {
+                            (!"(-<^$".contains(s))) {
                         k++;
                         s = removeFirst(s);
                     }
@@ -451,7 +451,7 @@ public class Phonet {
                               k > 1 und NO '-' in first string */
                         n0 = -1;
 
-                        int start3 = 0;
+                        int start3;
                         int start4 = 0;
                         int end3 = 0;
                         int end4 = 0;
@@ -459,12 +459,12 @@ public class Phonet {
                         if ((k > 1) && (charAt(src, i + k) != 0) &&
                                 (p0 != '-')) {
                             c0 = charAt(src, (i + k) - 1);
-                            n0 = alpha_pos[c0];
+                            n0 = alphaPos(c0);
 
                             if ((n0 >= 2) && (charAt(src, i + k) != 0)) {
                                 int[] p_hash1 = phonet_hash_1[n0 - 2];
                                 int[] p_hash2 = phonet_hash_2[n0 - 2];
-                                n0 = alpha_pos[charAt(src, i + k)];
+                                n0 = alphaPos(charAt(src, i + k));
                                 start3 = p_hash1[n0];
                                 start4 = p_hash1[0];
                                 end3 = p_hash2[n0];
@@ -490,7 +490,7 @@ public class Phonet {
                                     end4 = -1;
                                 }
                             } else {
-                                n0 = phonet_hash[c0];
+                                n0 = phonetHash(c0);
                                 start3 = n0;
                                 end3 = 10000;
                                 start4 = -1;
@@ -507,7 +507,6 @@ public class Phonet {
                                 if (n0 > end3) {
                                     if (start4 > 0) {
                                         n0 = start4;
-                                        start3 = start4;
                                         start4 = -1;
                                         end3 = end4;
                                         end4 = -1;
@@ -543,7 +542,7 @@ public class Phonet {
                                 while ((s != null) && s.length() > 0 &&
                                         (charAt(src, i + k0) == charAt(s, 0)) &&
                                         (!Character.isDigit(charAt(s, 0)) ||
-                                        ("(-<^$".indexOf(s) == -1))) {
+                                        (!"(-<^$".contains(s)))) {
                                     k0++;
                                     s = removeFirst(s);
                                 }
@@ -694,14 +693,13 @@ public class Phonet {
 
                             /* new "current char" */
                             if (s.length() == 0) {
-                                s = null;
                                 c = 0;
                             } else {
                                 c = s.charAt(0);
                             }
 
                             if ((phonet_rules[n] != null) &&
-                                    (phonet_rules[n].substring(1).indexOf("^^") > -1)) {
+                                    (phonet_rules[n].substring(1).contains("^^"))) {
                                 if (c != 0) {
                                     dest = dest.substring(0, j) + c +
                                             dest.substring(Math.min(dest.length(), j + 1));
@@ -721,7 +719,6 @@ public class Phonet {
 
                     if ((n > end1) && (start2 > 0)) {
                         n = start2;
-                        start1 = start2;
                         end1 = end2;
                         start2 = -1;
                         end2 = -1;

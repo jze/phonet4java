@@ -18,57 +18,78 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
-import com.googlecode.phonet4java.DaitchMokotoff;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
-public class DaitchMokotoffTest extends TestCase {
+public class DaitchMokotoffTest extends AbstractTestBase<DaitchMokotoff> {
     private DaitchMokotoff phonet = new DaitchMokotoff();
 
+    @Override
+    DaitchMokotoff getCoder() {
+        return phonet;
+    }
+
+    @Test
     public void testEmpty() {
         assertEquals("000000", phonet.code(""));
     }
 
+    @Test
     public void testNull() {
         assertEquals("000000", phonet.code(null));
     }
 
+    @Test
+    public void testSpace() {
+        assertEquals("000000", phonet.code(" "));
+    }
+
+    @Test
     public void testUnkownCharacter() {
         assertEquals("000000", phonet.code("$"));
     }
 
+    @Test
     public void testAuerbach() {
         assertEquals("097500", phonet.code("Auerbach"));
     }
 
+    @Test
     public void testOhrbach() {
         assertEquals("097500", phonet.code("OHRBACH"));
     }
 
+    @Test
     public void testLipshitz() {
         assertEquals("874400", phonet.code("LIPSHITZ"));
     }
 
+    @Test
     public void testLewinsky() {
-        assertEquals("876450", phonet.code("LEWINSKY"));
+        checkSimilarCoding("876450", new String[]{"LEWINSKY", "LEVINSKI", "Levinsky"});
     }
 
-    public void testLevinski() {
-        assertEquals("876450", phonet.code("LEVINSKI"));
-    }
-
+    @Test
     public void testSzlamawicz() {
         assertEquals("486740", phonet.code("SZLAMAWICZ"));
     }
 
+    @Test
     public void testShlamovitz() {
         assertEquals("486740", phonet.code("SHLAMOVITZ"));
     }
+
+    @Test
+    public void testLongInput() {
+        assertEquals("279457", phonet.code("Szczypiorskowski"));
+    }
+
+
 }

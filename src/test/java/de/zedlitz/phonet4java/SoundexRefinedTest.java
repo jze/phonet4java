@@ -1,5 +1,5 @@
 /*
- * Phonet2.java
+ * SoundexRefinedTest.java
  * 
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
@@ -18,19 +18,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
-public class Phonet2 extends Phonet implements Coder {
-    /**
-     * @see com.googlecode.phonet4java.Coder#code(java.lang.String)
-     */
+public class SoundexRefinedTest extends AbstractTestBase<SoundexRefined> {
+
+    private SoundexRefined phonet = new SoundexRefined();
+
     @Override
-    public String code(final String input) {
-        return this.phonet(input, 2);
+    SoundexRefined getCoder() {
+        return phonet;
+    }
+
+    @Test
+    public void testEmpty() {
+        assertEquals("Z000", phonet.code(""));
+    }
+
+    @Test
+    public void testNull() {
+        assertEquals("Z000", phonet.code(null));
+    }
+
+    @Test
+    public void testUnkownCharacter() {
+        assertEquals("Z000", phonet.code("$"));
+    }
+
+    @Test
+    public void testZedlitz() {
+
+        assertEquals("Z6765", phonet.code("Zedlitz"));
     }
 }

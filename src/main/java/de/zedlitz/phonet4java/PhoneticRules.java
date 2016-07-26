@@ -39,16 +39,16 @@
  * The author's email address is:
  *    astro.joerg@googlemail.com
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  *
  */
-public class PhoneticRules {
+interface PhoneticRules {
     
-    public final static String PHONET_END ="@@@";
+    String PHONET_END ="@@@";
     
     /*  Syntax for phonetic rules:
         <search_string>  <1st_rule> <2nd_rule>
@@ -83,7 +83,7 @@ public class PhoneticRules {
     /****    G,H,J,O,P,Q,S,V,W,X,Y        ****/
     /****    will "disappear".            ****/
 
-    public static final String phonet_rules_german[] = new String[]
+    String phonet_rules_german[] = new String[]
       {
     /****  separator chars  ****/
         "´",               " ",       " ",

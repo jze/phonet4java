@@ -18,40 +18,50 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
-import com.googlecode.phonet4java.Soundex;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
-public class SoundexTest extends TestCase {
-    Soundex soundex = new Soundex();
+public class SoundexTest extends AbstractTestBase<Soundex> {
+    private Soundex soundex = new Soundex();
 
+    @Override
+    Soundex getCoder() {
+        return soundex;
+    }
+
+    @Test
     public void testUppercase() throws Exception {
         assertEquals("Z343", soundex.code("Zedlitz"));
     }
 
+    @Test
     public void testLowercase() throws Exception {
         assertEquals("Z343", soundex.code("zedlitz"));
     }
 
+    @Test
     public void testEmpty() throws Exception {
         assertEquals("Z000", soundex.code(""));
     }
 
+    @Test
     public void testNull() throws Exception {
         assertEquals("Z000", soundex.code(null));
     }
 
+    @Test
     public void testUnknownCharacter() throws Exception {
         assertEquals("Z000", soundex.code("$"));
     }
 
+    @Test
     public void testUmlauts() {
         assertEquals("O200", soundex.code("ößüä"));
     }

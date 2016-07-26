@@ -18,108 +18,162 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
-public class Phonet1Test extends TestCase {
-    Phonet1 coder = new Phonet1();
+public class Phonet1Test extends AbstractTestBase<Phonet1> {
+    private Phonet1 coder = new Phonet1();
 
-    public void testEmpty() {
-	assertEquals("", coder.code(""));
-    }	
-
-    public void testNull() {
-	assertEquals("", coder.code(null));
-    }	
-
-    public void testWithTrace() {
-	coder.trace = true;
-	assertEquals("ZETLIZ", coder.code("Zedlitz"));
+    @Override
+    public Phonet1 getCoder() {
+        return coder;
     }
-    
+
+    @Test
+    public void testEmpty() {
+        assertEquals("", coder.code(""));
+    }
+
+    @Test
+    public void testWhitespcae() {
+        assertEquals(" ", coder.code(" "));
+    }
+
+    @Test
+    public void testUnderscore() {
+        assertEquals("_", coder.code("_"));
+    }
+
+    @Test
+    public void testNull() {
+        assertEquals("", coder.code(null));
+    }
+
+    @Test
+    public void testWithTrace() {
+          coder.trace = true;
+        assertEquals("ZETLIZ", coder.code("Zedlitz"));
+    }
+
+    @Test
     public void testZedlitz() {
         assertEquals("ZETLIZ", coder.code("Zedlitz"));
     }
 
-    public void testBremerhaven() throws Exception {
+    @Test
+    public void testBremerhaven() {
         assertEquals("BREMAHAFN", coder.code("Bremerhaven"));
     }
 
+    @Test
     public void testHamburgerHafen() {
         assertEquals("HAMBURGA HAFN", coder.code("Hamburger Hafen"));
     }
 
+    @Test
     public void testJesper() {
         assertEquals("IESPA", coder.code("Jesper"));
     }
 
+    @Test
     public void testElisabeth() {
         assertEquals("ELISABET", coder.code("elisabeth"));
     }
 
+    @Test
     public void testElisabet() {
         assertEquals("ELISABET", coder.code("elisabet"));
     }
 
+    @Test
     public void testZiegler() {
         assertEquals("ZIKLA", coder.code("Ziegler"));
     }
 
+    @Test
     public void testScherer() {
         assertEquals("SHERA", coder.code("Scherer"));
     }
 
+    @Test
     public void testBartels() {
         assertEquals("BARTLS", coder.code("Bartels"));
     }
 
+    @Test
     public void testJansen() {
         assertEquals("IANSN", coder.code("Jansen"));
     }
 
+    @Test
     public void testSievers() {
         assertEquals("SIWAS", coder.code("Sievers"));
     }
 
+    @Test
     public void testMichels() {
         assertEquals("MICHLS", coder.code("Michels"));
     }
 
+    @Test
     public void testEwers() {
         assertEquals("EWERS", coder.code("Ewers"));
     }
 
+    @Test
     public void testEvers() {
         assertEquals("EWERS", coder.code("Evers"));
     }
+
+    @Test
     public void testWessels() {
-	assertEquals("WESLS", coder.code("Wessels"));
-    }
-    
-    public void testGottschalk() {
-	assertEquals("GOSHALK", coder.code("Gottschalk"));
-    }
-    public void testBrückmann() {
-	assertEquals("BRÜKMAN", coder.code("Brückmann"));
-    }
-    	
-    public void testBlechschmidt() {
-	assertEquals("BLECHSHMIT", coder.code("Blechschmidt"));
+        assertEquals("WESLS", coder.code("Wessels"));
     }
 
+    @Test
+    public void testGottschalk() {
+        assertEquals("GOSHALK", coder.code("Gottschalk"));
+    }
+
+    @Test
+    public void testBrückmann() {
+        assertEquals("BRÜKMAN", coder.code("Brückmann"));
+    }
+
+    @Test
+    public void testBlechschmidt() {
+        assertEquals("BLECHSHMIT", coder.code("Blechschmidt"));
+    }
+
+    @Test
     public void testKolodziej() {
-	assertEquals("KOLOTZI", coder.code("Kolodziej"));
-    }	
+        assertEquals("KOLOTZI", coder.code("Kolodziej"));
+    }
+
+    @Test
     public void testKrauße() {
-	assertEquals("KRAUSE", coder.code("Krauße"));
-    }	
+        assertEquals("KRAUSE", coder.code("Krauße"));
+    }
+
+    @Test
     public void testCachel() {
-	assertEquals("KESHL", coder.code("Cachel"));
+        assertEquals("KESHL", coder.code("Cachel"));
+    }
+
+    @Test
+    public void testWrongÖ() {
+        assertEquals("SHӧNBERGA", coder.code("Schӧnberger"));
+    }
+
+    @Test
+    public void testSchulzIII() {
+        assertEquals("SHULS Ⅲ", coder.code("Schulz Ⅲ"));
     }
 }

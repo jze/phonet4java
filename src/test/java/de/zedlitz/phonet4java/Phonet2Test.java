@@ -18,67 +18,89 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.googlecode.phonet4java;
+package de.zedlitz.phonet4java;
 
-import com.googlecode.phonet4java.Coder;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
-public class Phonet2Test extends TestCase {
-    Coder coder = new Phonet2();
+public class Phonet2Test extends AbstractTestBase<Phonet2> {
+    private Phonet2 coder = new Phonet2();
 
+    @Override
+    public Phonet2 getCoder() {
+        return coder;
+    }
+
+    @Test
     public void testZedlitz() throws Exception {
         assertEquals("ZETLIZ", coder.code("Zedlitz"));
     }
 
+    @Test
     public void testBremerhaven() throws Exception {
         assertEquals("BRENAFN", coder.code("Bremerhaven"));
     }
+
+    @Test
     public void testSchönberg() {
-	assertEquals("ZÖNBAK",  coder.code("Schönberg"));
+        assertEquals("ZÖNBAK", coder.code("Schönberg"));
     }
-    
+
+    @Test
     public void testHamburgerHafen() {
-	assertEquals("ANBURKA AFN", coder.code("Hamburger Hafen"));
+        assertEquals("ANBURKA AFN", coder.code("Hamburger Hafen"));
     }
-    
 
+
+    @Test
     public void testZiegler() {
-	assertEquals("ZIKLA", coder.code("Ziegler"));
+        assertEquals("ZIKLA", coder.code("Ziegler"));
     }
-    
-    public void testScherer() {
-	assertEquals("ZERA", coder.code("Scherer"));
-    }
-    
-    public void testJansen() {
-	assertEquals("IANZN", coder.code("Jansen"));
-    }
-    
-    public void testEberhardt() {
-	assertEquals("EBART", coder.code("Eberhardt"));
-    }
-    
-    public void testGottschalk() {
-	assertEquals("KUZALK", coder.code("Gottschalk"));
-    }
-    
-    public void testBrückmann() {
-	assertEquals("BRIKNAN", coder.code("Brückmann"));
-    }public void testBlechschmidt() {
-	assertEquals("BLEKZNIT", coder.code("Blechschmidt"));
-    }
-    public void testKolodziej() {
-	assertEquals("KULUTZI", coder.code("Kolodziej"));
-    }	
-    public void testKrauße() {
-	assertEquals("KRAUZE", coder.code("Krauße"));
-    }	
 
-    
+    @Test
+    public void testScherer() {
+        assertEquals("ZERA", coder.code("Scherer"));
+    }
+
+    @Test
+    public void testJansen() {
+        assertEquals("IANZN", coder.code("Jansen"));
+    }
+
+    @Test
+    public void testEberhardt() {
+        assertEquals("EBART", coder.code("Eberhardt"));
+    }
+
+    @Test
+    public void testGottschalk() {
+        assertEquals("KUZALK", coder.code("Gottschalk"));
+    }
+
+    @Test
+    public void testBrückmann() {
+        assertEquals("BRIKNAN", coder.code("Brückmann"));
+    }
+
+    @Test
+    public void testBlechschmidt() {
+        assertEquals("BLEKZNIT", coder.code("Blechschmidt"));
+    }
+
+    @Test
+    public void testKolodziej() {
+        assertEquals("KULUTZI", coder.code("Kolodziej"));
+    }
+
+    @Test
+    public void testKrauße() {
+        assertEquals("KRAUZE", coder.code("Krauße"));
+    }
+
+
 }
