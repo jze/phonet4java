@@ -72,6 +72,11 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
     }
 
     @Test
+    public void testCanada() {
+        checkSimilarCoding("462", new String[]{"Kanada", "Canada"});
+    }
+
+    @Test
     public void testCzerny() {
         assertEquals("876", phonet.code("Czerny"));
     }
@@ -79,6 +84,11 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
     @Test
     public void testSchäfer() {
         assertEquals("837", phonet.code("Schäfer"));
+    }
+
+    @Test
+    public void testHeinzClassen() {
+              assertEquals("0684586", phonet.code("Heinz Classen"));
     }
 
     @Test
@@ -105,11 +115,14 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
                 {"Eberhardt", "01772"},
                 {"Fischer", "387"},
                 {"Foto", "32"},
+                {"Gustav","4823"},
                 {"Haithabu", "021"},
                 {"Hamburg", "06174"},
                 {"Hannover", "0637"},
                 {"Hoffmann", "0366"},
                 {"Holzbau", "0581"},
+                {"Jürgen", "0746"},
+                {"Juergen", "0746"},
                 {"Matsch", "68"},
                 {"Matz", "68"},
                 {"Müller", "657"},
@@ -118,6 +131,7 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
                 {"Peter", "127"},
                 {"Pharma", "376"},
                 {"Photo", "32"},
+                {"Qualle", "45"},
                 {"Schäfer", "837"},
                 {"Schmidt", "862"},
                 {"Schneider", "8627"},
