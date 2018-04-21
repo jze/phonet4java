@@ -5,6 +5,7 @@
     <artifactId>phonet4java</artifactId>
     <name>phonet4java</name>
     <version>1.1</version>
+    <packaging>jar</packaging>
     <description>Implementation of various phonetic algorithms in Java.</description>
     <url>https://github.com/jze/phonet4java</url>
     <properties>
@@ -19,13 +20,13 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/jze/phonet4java.git</connection>
+        <connection>scm:git:https://github.com/jze/phonet4java.git</connection>
         <developerConnection>scm:git:git@github.com:jze/phonet4java.git</developerConnection>
         <url>https://github.com/jze/phonet4java</url>
     </scm>
     <developers>
         <developer>
-            <name>Jesper Zedlitz</name>
+            <name>Dr. Jesper Zedlitz</name>
             <id>jesper.zedlitz</id>
             <email>jesper@zedlitz.de</email>
             <roles>
@@ -56,6 +57,57 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -66,12 +118,27 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <!-- Repository for snapshots -->
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <!-- Repository for releases -->
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <reporting>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.9</version>
+                <version>2.3</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
