@@ -1,8 +1,8 @@
 /*
- * Java implementation of the "phonet" algorithm presented in the c't magazine 
+ * Java implementation of the "phonet" algorithm presented in the c't magazine
  * volume 25/1999, p. 252
- * 
- * The original author of the C version is 
+ *
+ * The original author of the C version is
  *    Joerg MICHAEL, Adalbert-Stifter-Str. 11, 30655 Hannover, Germany
  *
  * This library is free software; you can redistribute it and/or
@@ -25,52 +25,39 @@ package de.zedlitz.phonet4java;
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
- *
  */
 public class Phonet {
-    private static final String[] phonet_rules =
-        PhoneticRules.phonet_rules_german;
+    private static final String[] phonet_rules = PhoneticRules.phonet_rules_german;
     private static final int HASH_COUNT = 512;
-    private static final String umlaut_upper =
-        "ÀÁÂÃÅÄÆÇÐÈÉÊËÌÍÎÏÑÒÓÔÕÖØßÞÙÚÛÜÝŸ";
-    private static final String umlaut_lower =
-        "àáâãåäæçðèéêëìíîïñòóôõöøßþùúûüýÿ";
+    private static final String umlaut_upper = "ÀÁÂÃÅÄÆÇÐÈÉÊËÌÍÎÏÑÒÓÔÕÖØßÞÙÚÛÜÝŸ";
+    private static final String umlaut_lower = "àáâãåäæçðèéêëìíîïñòóôõöøßþùúûüýÿ";
     private static final String letters_a_to_z = "abcdefghijklmnopqrstuvwxyz";
     private static final String letters_A_to_Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final char INVALID_CHARACTER = '_';
-
+    private final int[] phonet_hash = new int[HASH_COUNT];
+    private final int[] alpha_pos = new int[HASH_COUNT];
     /**
      * Output debug information if set <code>true</code>.
      */
     boolean trace = false;
-   // private final char[] upperchar = new char[HASH_COUNT];
-   // private final int[] isletter = new int[HASH_COUNT];
-    private final int[] phonet_hash = new int[HASH_COUNT];
-    private final int[] alpha_pos = new int[HASH_COUNT];
     private int[][] phonet_hash_1 = new int[26][28];
     private int[][] phonet_hash_2 = new int[26][28];
 
-    /**
-     *
-     */
     public Phonet() {
         this.initialize_phonet();
     }
 
     private void trace_info(final String text, final int n, final String errText) {
         String s = (phonet_rules[n] == null) ? "(NULL)" : phonet_rules[n];
-        String s2 =
-            (phonet_rules[n + 1] == null) ? "(NULL)" : phonet_rules[n + 1];
-        String s3 =
-            (phonet_rules[n + 2] == null) ? "(NULL)" : phonet_rules[n + 2];
+        String s2 = (phonet_rules[n + 1] == null) ? "(NULL)" : phonet_rules[n + 1];
+        String s3 = (phonet_rules[n + 2] == null) ? "(NULL)" : phonet_rules[n + 2];
 
-        System.out.printf("%s %d:  \"%s\"%s\"%s\" %s\n", text, ((n / 3) + 1),
-            s, s2, s3, errText);
+        System.out.printf("%s %d:  \"%s\"%s\"%s\" %s\n", text, ((n / 3) + 1), s, s2, s3, errText);
     }
 
     /**
      * Remove the first character of a String.
-      */
+     */
     private String removeFirst(final String s) {
         String result;
 
@@ -99,58 +86,44 @@ public class Phonet {
 
         return result;
     }
-    
-    private int alphaPos(char i ) {
-        if( i >= HASH_COUNT) {
+
+    private int alphaPos(char i) {
+        if (i >= HASH_COUNT) {
             return alpha_pos[INVALID_CHARACTER];
         }
-        return   alpha_pos[i];
+        return alpha_pos[i];
     }
 
-    private int phonetHash(char i ) {
-        if( i >= HASH_COUNT) {
+    private int phonetHash(char i) {
+        if (i >= HASH_COUNT) {
             return phonet_hash[INVALID_CHARACTER];
         }
-        return   phonet_hash[i];
+        return phonet_hash[i];
     }
 
 
     private void initialize_phonet() {
-        /****  generate arrays "alpha_pos", "upperchar" and "isletter"  ****/
+        /*  generate arrays "alpha_pos", "upperchar" and "isletter"  */
         for (int i = 0; i < HASH_COUNT; i++) {
             alpha_pos[i] = 0;
         }
+
         /* German and international umlauts  */
-        {
-            /* k == -1 in the original C code */
-            String s = umlaut_lower;
-            String s2 = umlaut_upper;
+        for (int i = 0; i < umlaut_lower.length(); i++) {
+            char n = umlaut_upper.charAt(i);
+            alpha_pos[n] = -1 + 2;
 
-            for (int i = 0; i < s.length(); i++) {
-                /* s2 */
-                char n = s2.charAt(i);
-                alpha_pos[n] = -1 + 2;
-
-                /* s */
-                n = s.charAt(i);
-                alpha_pos[n] = -1 + 2;
-            }
+            n = umlaut_lower.charAt(i);
+            alpha_pos[n] = -1 + 2;
         }
+
         /*  "normal" letters ('a'-'z' and 'A'-'Z')  */
-        /* k == 0 in the original C code */
-        {
-            String s = letters_a_to_z;
-            String s2 = letters_A_to_Z;
+        for (int i = 0; i < letters_a_to_z.length(); i++) {
+            char n = letters_A_to_Z.charAt(i);
+            alpha_pos[n] = i + 2;
 
-            for (int i = 0; i < s.length(); i++) {
-                /* s2 */
-                char n = s2.charAt(i);
-                alpha_pos[n] = i + 2;
-
-                /* s */
-                n = s.charAt(i);
-                alpha_pos[n] = i + 2;
-            }
+            n = letters_a_to_z.charAt(i);
+            alpha_pos[n] = i + 2;
         }
 
         for (int i = 0; i < HASH_COUNT; i++) {
@@ -166,11 +139,14 @@ public class Phonet {
                 p_hash2[k] = -1;
             }
         }
+        initializePhoneticRules();
+    }
 
+    private void initializePhoneticRules() {
         /* for each phonetc rule */
         for (int i = 0;
-                (phonet_rules[i] == null) ||
-                !phonet_rules[i].equals(PhoneticRules.PHONET_END); i++) {
+             (phonet_rules[i] == null) ||
+                     !phonet_rules[i].equals(PhoneticRules.PHONET_END); i++) {
             String s = phonet_rules[i];
 
             if ((s != null) && ((i % 3) == 0)) {
@@ -179,7 +155,7 @@ public class Phonet {
 
                 if ((phonet_hash[k] < 0) &&
                         ((phonet_rules[i + 1] != null) ||
-                        (phonet_rules[i + 2] != null))) {
+                                (phonet_rules[i + 2] != null))) {
                     phonet_hash[k] = i;
                 }
 
@@ -203,7 +179,7 @@ public class Phonet {
                         k = alpha_pos[s.charAt(0)];
 
                         if (k > 0) {
-                            /****  add hash value for this letter  ****/
+                            /*  add hash value for this letter  */
                             if (p_hash1[k] < 0) {
                                 p_hash1[k] = i;
                                 p_hash2[k] = i;
@@ -217,7 +193,7 @@ public class Phonet {
                         }
 
                         if (k <= 0) {
-                            /****  add hash value for all letters  ****/
+                            /*  add hash value for all letters  */
                             if (p_hash1[0] < 0) {
                                 p_hash1[0] = i;
                             }
@@ -256,17 +232,10 @@ public class Phonet {
     }
 
     String phonet(final String input, final int ml) {
-        int i;
-        int j;
-        int k;
-        int n;
-        int p;
-        int z;
         int k0;
         int n0;
         int p0;
         int z0;
-        char c;
         char c0 = 0;
         String s;
         String dest = input;
@@ -281,16 +250,16 @@ public class Phonet {
         String src = toUpperCase(input);
 
         /*  check "src"  */
-        i = 0;
-        j = 0;
-        z = 0;
+        int i = 0;
+        int j = 0;
+        int z = 0;
 
         while (i < src.length()) {
-            c = src.charAt(i);
+            char c = src.charAt(i);
 
             if (trace) {
                 System.out.printf("\ncheck position %d:  src = \"%s\",", j,
-                    src.substring(i));
+                        src.substring(i));
                 System.out.printf("  dest = \"%s\"\n", dest.substring(0, j));
             }
 
@@ -298,7 +267,7 @@ public class Phonet {
             int start2;
             int end1;
             int end2;
-            n = alphaPos(c);
+            int n = alphaPos(c);
 
             if (n >= 2) {
                 int[] p_hash1 = phonet_hash_1[n - 2];
@@ -315,7 +284,7 @@ public class Phonet {
                 end1 = p_hash2[n];
                 end2 = p_hash2[0];
 
-                /****  preserve rule priorities  ****/
+                /*  preserve rule priorities  */
                 if ((start2 >= 0) && ((start1 < 0) || (start2 < start1))) {
                     n = start1;
                     start1 = start2;
@@ -374,8 +343,8 @@ public class Phonet {
                     }
 
                     /* check whole string */
-                    k = 1; // number of matching letters
-                    p = 5; // default priority
+                    int k = 1; // number of matching letters
+                    int p = 5; // default priority
                     s = phonet_rules[n];
                     s = removeFirst(s);
 
@@ -438,15 +407,15 @@ public class Phonet {
 
                     if ((charAt(s, 0) == 0) ||
                             ((charAt(s, 0) == '^') &&
-                            ((i == 0) ||
-                            !Character.isLetter(charAt(src, i - 1))) &&
-                            ((charAt(s, 1) != '$') ||
-                            (!Character.isLetter(charAt(src, i + k0)) &&
-                            (charAt(src, i + k0) != '.')))) ||
+                                    ((i == 0) ||
+                                            !Character.isLetter(charAt(src, i - 1))) &&
+                                    ((charAt(s, 1) != '$') ||
+                                            (!Character.isLetter(charAt(src, i + k0)) &&
+                                                    (charAt(src, i + k0) != '.')))) ||
                             ((charAt(s, 0) == '$') && (i > 0) &&
-                            Character.isLetter(charAt(src, i - 1)) &&
-                            (!Character.isLetter(charAt(src, i + k0)) &&
-                            (charAt(src, i + k0) != '.')))) {
+                                    Character.isLetter(charAt(src, i - 1)) &&
+                                    (!Character.isLetter(charAt(src, i + k0)) &&
+                                            (charAt(src, i + k0) != '.')))) {
                         /* look for continuation, if:
                               k > 1 und NO '-' in first string */
                         n0 = -1;
@@ -470,7 +439,7 @@ public class Phonet {
                                 end3 = p_hash2[n0];
                                 end4 = p_hash2[0];
 
-                                /****  preserve rule priorities  ****/
+                                /*  preserve rule priorities  */
                                 if ((start4 >= 0) &&
                                         ((start3 < 0) || (start4 < start3))) {
                                     n0 = start3;
@@ -516,7 +485,7 @@ public class Phonet {
 
                                     p0 = -1;
 
-                                    /****  important  ****/
+                                    /*  important  */
                                     break;
                                 }
 
@@ -530,10 +499,10 @@ public class Phonet {
 
                                 if (trace) {
                                     trace_info("> > continuation rule no.", n0,
-                                        "is being checked");
+                                            "is being checked");
                                 }
 
-                                /****  check whole string  ****/
+                                /*  check whole string  */
                                 k0 = k;
                                 p0 = 5;
                                 s = phonet_rules[n0];
@@ -542,16 +511,16 @@ public class Phonet {
                                 while ((s != null) && s.length() > 0 &&
                                         (charAt(src, i + k0) == charAt(s, 0)) &&
                                         (!Character.isDigit(charAt(s, 0)) ||
-                                        (!"(-<^$".contains(s)))) {
+                                                (!"(-<^$".contains(s)))) {
                                     k0++;
                                     s = removeFirst(s);
                                 }
 
                                 if (charAt(s, 0) == '(') {
-                                    /****  check an array of letters  ****/
+                                    /* check an array of letters  */
                                     if (Character.isLetter(charAt(src, i + k0)) &&
                                             (s.substring(1)
-                                                  .indexOf(charAt(src, i + k0)) > -1)) {
+                                                    .indexOf(charAt(src, i + k0)) > -1)) {
                                         k0++;
 
                                         while ((s != null) &&
@@ -583,13 +552,13 @@ public class Phonet {
                                 if ((s == null) || s.length() == 0
                                         /*s == '^' is not possible here */ ||
                                         ((charAt(s, 0) == '$') &&
-                                        !Character.isLetter(charAt(src, i + k0)) &&
-                                        (charAt(src, i + k0) != '.'))) {
+                                                !Character.isLetter(charAt(src, i + k0)) &&
+                                                (charAt(src, i + k0) != '.'))) {
                                     if (k0 == k) {
                                         /* this is only a partial string */
                                         if (trace) {
                                             trace_info("> > continuation rule no.",
-                                                n0, "not used (too short)");
+                                                    n0, "not used (too short)");
                                         }
 
                                         n0 += 3;
@@ -601,7 +570,7 @@ public class Phonet {
                                         /* priority is too low  */
                                         if (trace) {
                                             trace_info("> > continuation rule no.",
-                                                n0, "not used (priority)");
+                                                    n0, "not used (priority)");
                                         }
 
                                         n0 += 3;
@@ -615,7 +584,7 @@ public class Phonet {
 
                                 if (trace) {
                                     trace_info("> > continuation rule no.", n0,
-                                        "not used");
+                                            "not used");
                                 }
 
                                 n0 += 3;
@@ -624,13 +593,13 @@ public class Phonet {
                             /* end of "while" */
                             if ((p0 >= p) &&
                                     ((phonet_rules[n0] != null) &&
-                                    (phonet_rules[n0].charAt(0) == c0))) {
+                                            (phonet_rules[n0].charAt(0) == c0))) {
                                 n += 3;
 
                                 if (trace) {
                                     trace_info("> rule no.", n, "");
                                     trace_info("> not used because of continuation",
-                                        n0, "");
+                                            n0, "");
                                 }
 
                                 continue;
@@ -655,7 +624,7 @@ public class Phonet {
                             /* rule with '<' is applied */
                             if ((j > 0) && s != null && s.length() > 0 &&
                                     ((charAt(dest, j - 1) == c) ||
-                                    (charAt(dest, j - 1) == charAt(s, 0)))) {
+                                            (charAt(dest, j - 1) == charAt(s, 0)))) {
                                 j--;
                             }
 
@@ -665,14 +634,14 @@ public class Phonet {
 
                             while ((s != null) && (s.length() > 0) && (charAt(src, i + k0) != 0)) {
                                 src = src.substring(0, i + k0) + charAt(s, 0) +
-                                    src.substring(i + k0 + 1);
+                                        src.substring(i + k0 + 1);
                                 k0++;
                                 s = removeFirst(s);
                             }
 
                             if (k0 < k) {
                                 src = src.substring(0, i + k0) +
-                                    src.substring(i + k);
+                                        src.substring(i + k);
                             }
 
                             c = src.charAt(i);
@@ -680,7 +649,7 @@ public class Phonet {
                             i = (i + k) - 1;
                             z = 0;
 
-                            while ((s != null) && (s.length() > 1) ) {
+                            while ((s != null) && (s.length() > 1)) {
                                 if ((j == 0) ||
                                         (dest.charAt(j - 1) != s.charAt(0))) {
                                     dest = dest.substring(0, j) + s.charAt(0) +
@@ -727,7 +696,7 @@ public class Phonet {
             }
 
             if (z0 == 0) {
-                if ((c != 0) &&  ((j == 0) || (dest.charAt(j - 1) != c))) {
+                if ((c != 0) && ((j == 0) || (dest.charAt(j - 1) != c))) {
                     /* delete multiple letters only */
                     dest = dest.substring(0, j) + c + dest.substring(Math.min(j + 1, inputLength));
                     j++;

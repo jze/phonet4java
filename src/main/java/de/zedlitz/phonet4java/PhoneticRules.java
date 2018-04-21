@@ -74,18 +74,17 @@ interface PhoneticRules {
     */
     
 
-    /****  Phonetic rules for German.     ****/
-    /****  First Rules:                   ****/
-    /****    The letters Ä,ß,C,J,Q,V,Y    ****/
-    /****    will "disappear".            ****/
-    /****  Second Rules (less accurate):  ****/
-    /****    The letters Ä,Ü,ß,C,D,       ****/
-    /****    G,H,J,O,P,Q,S,V,W,X,Y        ****/
-    /****    will "disappear".            ****/
+    // ****  Phonetic rules for German.     ****/
+    // ****  First Rules:                   ****/
+    // ****    The letters Ä,ß,C,J,Q,V,Y    ****/
+    // ****    will "disappear".            ****/
+    // ****  Second Rules (less accurate):  ****/
+    // ****    The letters Ä,Ü,ß,C,D,       ****/
+    // ****    G,H,J,O,P,Q,S,V,W,X,Y        ****/
+    // ****    will "disappear".            ****/
 
-    String phonet_rules_german[] = new String[]
-      {
-    /****  separator chars  ****/
+    String phonet_rules_german[] = new String[] {
+    // ****  separator chars  ****/
         "´",               " ",       " ",
         "'",               " ",       " ",
         "`$",              "",        "",
@@ -96,7 +95,7 @@ interface PhoneticRules {
         " ",               " ",       " ",
         ".",               ".",       ".",
         ":",               ".",       ".",
-    /****  German umlauts  ****/
+    // ****  German umlauts  ****/
         "ÄE",              "E",       "E",
         "ÄU<",             "EU",      "EU",
         "ÄV(AEOU)-<",      "EW",      null,
@@ -115,7 +114,7 @@ interface PhoneticRules {
         "Ü",               null,      "I",
         "ßCH<",            null,      "Z",
         "ß<",              "S",       "Z",
-    /****  international umlauts  ****/
+    // ****  international umlauts  ****/
         "À<",              "A",       "A",
         "Á<",              "A",       "A",
         "Â<",              "A",       "A",
@@ -154,7 +153,7 @@ interface PhoneticRules {
         "Û<",              "U",       "U",
         "Ý<",              "I",       "I",
         "<",              "I",       "I",
-    /****  "normal" letters (A-Z)  ****/
+    // ****  "normal" letters (A-Z)  ****/
         "ABELLE$",         "ABL",     "ABL",
         "ABELL$",          "ABL",     "ABL",
         "ABIENNE$",        "ABIN",    "ABIN",
@@ -183,8 +182,8 @@ interface PhoneticRules {
         "AJ(AÄEÈÉÊIOÖUÜ)--", "A",     "A",
         "AKTIE",           "AXIE",    "AXIE",
         "AKTUEL",          "AKTUEL",  null,
-        "ALOI^",           "ALOI",    "ALUI",  /** Do NOT merge these rules  **/
-        "ALOY^",           "ALOI",    "ALUI",  /** (needed by "check_rules") **/
+        "ALOI^",           "ALOI",    "ALUI",  // ** Do NOT merge these rules  **/
+        "ALOY^",           "ALOI",    "ALUI",  // ** (needed by "check_rules") **/
         "AMATEU(RS)-",     "AMATÖ",   "ANATÖ",
         "ANCH(OEI)-",      "ANSH",    "ANZ",
         "ANDERGEGANG----", "ANDA GE", "ANTA KE",
@@ -279,7 +278,7 @@ interface PhoneticRules {
         "CHAU(CDFSVWXZ)-", "SHO",     "ZU",
         "CHÄ(CF)-",        "SHE",     "ZE",
         "CHE(CF)-",        "SHE",     "ZE",
-        "CHEM-^",          "KE",      "KE",    /**  or: "CHE", "KE" **/
+        "CHEM-^",          "KE",      "KE",    // **  or: "CHE", "KE" **/
         "CHEQUE<",         "SHEK",    "ZEK",
         "CHI(CFGPVW)-",    "SHI",     "ZI",
         "CH(AEUY)-<^",     "SH",      "Z",
@@ -291,7 +290,7 @@ interface PhoneticRules {
         "CHST-",           "X",       "X",
         "CH(SßXZ)3",       "X",       "X",
         "CHTNI-3",         "CHN",     "KN",
-        "CH^",             "K",       "K",     /**  or: "CH", "K"  **/
+        "CH^",             "K",       "K",     // **  or: "CH", "K"  **/
         "CH",              "CH",      "K",
         "CIC$",            "ZIZ",     "ZIZ",
         "CIENCEFICT----",  "EIENS ",  "EIENZ ",
@@ -590,7 +589,7 @@ interface PhoneticRules {
         "KRY9^",           "KRÜ",     null,
         "KSCH---",         "K",       "K",
         "KSH--",           "K",       "K",
-        "K(SßXZ)7",        "X",       "X",    /**** implies "KST" -> "XT" ****/
+        "K(SßXZ)7",        "X",       "X",    // **** implies "KST" -> "XT" ****/
         "KT'S$",           "X",       "X",
         "KTI(AIOU)-3",     "XI",      "XI",
         "KT(SßXZ)",        "X",       "X",
@@ -731,7 +730,7 @@ interface PhoneticRules {
         "OUSE$",           "AUS",     "AUZ",
         "OUT-",            "AU",      "AU",
         "OU",              "U",       "U",
-        "O(FV)$",          "AU",      "AU",  /****  due to "OW$" -> "AU"  ****/
+        "O(FV)$",          "AU",      "AU",  // ****  due to "OW$" -> "AU"  ****/
         "OVER--<",         "OW",      null,
         "OV(AOU)-",        "OW",      null,
         "OW$",             "AU",      "AU",
