@@ -17,7 +17,7 @@
 
 package de.zedlitz.phonet4java;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Jesper Zedlitz <j.zedlitz@email.uni-kiel.de>
@@ -43,7 +43,7 @@ public abstract class AbstractTestBase<C extends Coder> {
 
             String input = pair[0];
             String expected = pair[1];
-            assertEquals( input, expected, coder.code(input));
+            assertEquals(expected, coder.code(input));
         }
     }
 

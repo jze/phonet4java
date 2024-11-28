@@ -1,6 +1,6 @@
 /*
  * DaitchMokotoffTest.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class DaitchMokotoffTest extends AbstractTestBase<DaitchMokotoff> {
-    private DaitchMokotoff phonet = new DaitchMokotoff();
+    private final DaitchMokotoff phonet = new DaitchMokotoff();
 
     @Override
     DaitchMokotoff getCoder() {
@@ -57,38 +57,15 @@ public class DaitchMokotoffTest extends AbstractTestBase<DaitchMokotoff> {
     }
 
     @Test
-    public void testAuerbach() {
+    public void code() {
         assertEquals("097500", phonet.code("Auerbach"));
-    }
-
-    @Test
-    public void testOhrbach() {
         assertEquals("097500", phonet.code("OHRBACH"));
-    }
-
-    @Test
-    public void testLipshitz() {
         assertEquals("874400", phonet.code("LIPSHITZ"));
-    }
-
-    @Test
-    public void testLewinsky() {
-        checkSimilarCoding("876450", new String[]{"LEWINSKY", "LEVINSKI", "Levinsky"});
-    }
-
-    @Test
-    public void testSzlamawicz() {
         assertEquals("486740", phonet.code("SZLAMAWICZ"));
-    }
-
-    @Test
-    public void testShlamovitz() {
         assertEquals("486740", phonet.code("SHLAMOVITZ"));
-    }
-
-    @Test
-    public void testLongInput() {
         assertEquals("279457", phonet.code("Szczypiorskowski"));
+
+        checkSimilarCoding("876450", new String[]{"LEWINSKY", "LEVINSKI", "Levinsky"});
     }
 
 

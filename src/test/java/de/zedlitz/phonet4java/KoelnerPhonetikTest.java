@@ -1,6 +1,6 @@
 /*
  * KoelnerPhonetikTest.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
-    private KoelnerPhonetik phonet = new KoelnerPhonetik();
+    private final KoelnerPhonetik phonet = new KoelnerPhonetik();
 
     @Override
     KoelnerPhonetik getCoder() {
@@ -62,7 +62,7 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
     }
 
     @Test
-    public void testMoritzMüller() {
+    public void testMoritzMueller() {
         checkSimilarCoding("678657", new String[]{"Moritz Müller", "Moriz Müler"});
     }
 
@@ -82,13 +82,13 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
     }
 
     @Test
-    public void testSchäfer() {
+    public void testSchaefer() {
         assertEquals("837", phonet.code("Schäfer"));
     }
 
     @Test
     public void testHeinzClassen() {
-              assertEquals("0684586", phonet.code("Heinz Classen"));
+        assertEquals("0684586", phonet.code("Heinz Classen"));
     }
 
     @Test
@@ -107,7 +107,10 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
                 {"Arbeitsamt", "071862"},
                 {"Becker", "147"},
                 {"Breschnew", "17863"},
+                {"Café", "43"},
                 {"China", "46"},
+                {"Claude", "452"},
+                {"Code", "42"},
                 {"Christstollen", "478256"},
                 {"Deutsch", "28"},
                 {"Deutz", "28"},
@@ -115,7 +118,7 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
                 {"Eberhardt", "01772"},
                 {"Fischer", "387"},
                 {"Foto", "32"},
-                {"Gustav","4823"},
+                {"Gustav", "4823"},
                 {"Haithabu", "021"},
                 {"Hamburg", "06174"},
                 {"Hannover", "0637"},

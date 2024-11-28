@@ -1,6 +1,6 @@
 /*
  * SoundexRefinedTest.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class SoundexRefinedTest extends AbstractTestBase<SoundexRefined> {
 
-    private SoundexRefined phonet = new SoundexRefined();
+    private final SoundexRefined phonet = new SoundexRefined();
 
     @Override
     SoundexRefined getCoder() {
@@ -52,8 +52,10 @@ public class SoundexRefinedTest extends AbstractTestBase<SoundexRefined> {
     }
 
     @Test
-    public void testZedlitz() {
-
+    public void testCode() {
         assertEquals("Z6765", phonet.code("Zedlitz"));
+        assertEquals("K8000",phonet.code("Kim"));
+        assertEquals("B6000",phonet.code("Boot"));
     }
+
 }

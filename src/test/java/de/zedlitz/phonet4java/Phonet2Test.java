@@ -1,6 +1,6 @@
 /*
  * Phonet2Test.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class Phonet2Test extends AbstractTestBase<Phonet2> {
-    private Phonet2 coder = new Phonet2();
+    private final Phonet2 coder = new Phonet2();
 
     @Override
     public Phonet2 getCoder() {
@@ -83,7 +83,7 @@ public class Phonet2Test extends AbstractTestBase<Phonet2> {
     }
 
     @Test
-    public void testBrückmann() {
+    public void testBrueckmann() {
         assertEquals("BRIKNAN", coder.code("Brückmann"));
     }
 
@@ -98,7 +98,7 @@ public class Phonet2Test extends AbstractTestBase<Phonet2> {
     }
 
     @Test
-    public void testKrauße() {
+    public void testKrausse() {
         assertEquals("KRAUZE", coder.code("Krauße"));
     }
 

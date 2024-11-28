@@ -1,6 +1,6 @@
 /*
  * Phonet1Test.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class Phonet1Test extends AbstractTestBase<Phonet1> {
-    private Phonet1 coder = new Phonet1();
+    private final Phonet1 coder = new Phonet1();
 
     @Override
     public Phonet1 getCoder() {
@@ -58,7 +58,7 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
 
     @Test
     public void testWithTrace() {
-          coder.trace = true;
+        coder.trace = true;
         assertEquals("ZETLIZ", coder.code("Zedlitz"));
     }
 
@@ -143,7 +143,7 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
     }
 
     @Test
-    public void testBrückmann() {
+    public void testBrueckmann() {
         assertEquals("BRÜKMAN", coder.code("Brückmann"));
     }
 
@@ -158,7 +158,7 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
     }
 
     @Test
-    public void testKrauße() {
+    public void testKrausse() {
         assertEquals("KRAUSE", coder.code("Krauße"));
     }
 
@@ -168,7 +168,7 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
     }
 
     @Test
-    public void testWrongÖ() {
+    public void testWrongOe() {
         assertEquals("SHӧNBERGA", coder.code("Schӧnberger"));
     }
 

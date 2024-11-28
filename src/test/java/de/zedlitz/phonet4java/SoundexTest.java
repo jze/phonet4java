@@ -1,6 +1,6 @@
 /*
  * SoundexTest.java
- * 
+ *
  * Copyright (c) 2009, Jesper Zedlitz. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,16 +20,16 @@
  */
 package de.zedlitz.phonet4java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
  */
 public class SoundexTest extends AbstractTestBase<Soundex> {
-    private Soundex soundex = new Soundex();
+    private final Soundex soundex = new Soundex();
 
     @Override
     Soundex getCoder() {
