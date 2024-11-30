@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.zedlitz</groupId>
     <artifactId>phonet4java</artifactId>
     <name>phonet4java</name>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <description>Implementation of various phonetic algorithms in Java.</description>
     <url>https://github.com/jze/phonet4java</url>
@@ -23,7 +22,7 @@
         <connection>scm:git:https://github.com/jze/phonet4java.git</connection>
         <developerConnection>scm:git:git@github.com:jze/phonet4java.git</developerConnection>
         <url>https://github.com/jze/phonet4java</url>
-        <tag>HEAD</tag>
+        <tag>phonet4java-1.2.0</tag>
     </scm>
     <developers>
         <developer>
