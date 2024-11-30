@@ -1,5 +1,6 @@
 # phonet4java
 
+![Maven Central version](https://img.shields.io/maven-central/v/de.zedlitz/phonet4java)
 ![Coverage](.github/badges/jacoco.svg)
 
 The project provides Java implementations for several phonetic algorithms like:
