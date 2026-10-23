@@ -108,4 +108,43 @@ public class Phonet2Test extends AbstractTestBase<Phonet2> {
         checkSimilarCoding("ÖFRE", new String[]{"Œuvre", "œuvre"});
         assertEquals("I", coder.code("Ÿ"));
     }
+
+    @Test
+    public void testWholeWordRules() {
+        // rules with "^$" only apply to a whole word
+        assertEquals("BEBI", coder.code("Baby"));
+        assertEquals("BEBI.", coder.code("Baby."));
+        assertEquals("BEBIFUN", coder.code("Babyfon"));
+        assertEquals("UKE", coder.code("Okay"));
+        assertEquals("INZ", coder.code("Jeans"));
+        assertEquals("GMBH", coder.code("GmbH"));
+    }
+
+    @Test
+    public void testContinuationAfterUmlautOrDot() {
+        assertEquals("NIKEL", coder.code("Michaël"));
+        assertEquals("IZREL", coder.code("Israël"));
+        assertEquals("C. NILA", coder.code("C. Müller"));
+    }
+
+    @Test
+    public void testRuleRejectedBecauseOfContinuation() {
+        assertEquals("BUEINK", coder.code("Boeing"));
+        assertEquals("INIZIATIFE", coder.code("Initiative"));
+        assertEquals("KTINIA", coder.code("Gdynia"));
+        assertEquals("NAKEFAN", coder.code("McÉwan"));
+    }
+
+    @Test
+    public void testReplaceRuleRemovesLastLetter() {
+        assertEquals("TA.", coder.code("Daher."));
+        assertEquals("AN", coder.code("Ahern"));
+    }
+
+    @Test
+    public void testWithTrace() {
+        // "Ä" has no rule for the first variant, which shows up as "(NULL)" in the trace
+        coder.trace = true;
+        assertEquals("BA", coder.code("Bär"));
+    }
 }

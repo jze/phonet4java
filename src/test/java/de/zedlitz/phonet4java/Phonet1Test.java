@@ -183,4 +183,42 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
         checkSimilarCoding("ÖWRE", new String[]{"Œuvre", "œuvre"});
         assertEquals("I", coder.code("Ÿ"));
     }
+
+    @Test
+    public void testWholeWordRules() {
+        // rules with "^$" only apply to a whole word
+        assertEquals("BEBI", coder.code("Baby"));
+        assertEquals("BEBI.", coder.code("Baby."));
+        assertEquals("BEBIFON", coder.code("Babyfon"));
+        assertEquals("OKE", coder.code("Okay"));
+        assertEquals("JINS", coder.code("Jeans"));
+        assertEquals("GMBH", coder.code("GmbH"));
+    }
+
+    @Test
+    public void testContinuationAfterUmlautOrDot() {
+        assertEquals("MICHEL", coder.code("Michaël"));
+        assertEquals("ISREL", coder.code("Israël"));
+        assertEquals("C. MÜLA", coder.code("C. Müller"));
+    }
+
+    @Test
+    public void testRuleRejectedBecauseOfContinuation() {
+        assertEquals("BOEINK", coder.code("Boeing"));
+        assertEquals("INIZIATIWE", coder.code("Initiative"));
+        assertEquals("GDÜNIA", coder.code("Gdynia"));
+        assertEquals("MAKEWAN", coder.code("McÉwan"));
+    }
+
+    @Test
+    public void testReplaceRuleRemovesLastLetter() {
+        assertEquals("DA.", coder.code("Daher."));
+    }
+
+    @Test
+    public void testWithTraceAndContinuation() {
+        coder.trace = true;
+        assertEquals("MICHEL", coder.code("Michael"));
+        assertEquals("BOEINK", coder.code("Boeing"));
+    }
 }
