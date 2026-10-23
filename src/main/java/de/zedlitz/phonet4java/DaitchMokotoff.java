@@ -20,6 +20,8 @@
  */
 package de.zedlitz.phonet4java;
 
+import java.util.Locale;
+
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
@@ -64,7 +66,7 @@ public class DaitchMokotoff implements Coder {
             "4", "4", "S", "4", "4", "4", "TTS", "4", "4", "4", "TTSZ", "4", "4",
             "4", "TS", "4", "4", "4", "TTZ", "4", "4", "4", "TZS", "4", "4", "4",
             "TSZ", "4", "4", "4", "TZ", "4", "4", "4", "T", "3", "3", "3", "UY",
-            "0", "1", "", "V", "7", "7", "7", "W", "7", "7", "7", "X", "5", "54",
+            "0", "1", "", "U", "0", "", "", "V", "7", "7", "7", "W", "7", "7", "7", "X", "5", "54",
             "54", "Y", "1", "", "", "Z", "4", "4", "4", "A", "0", "", "", "ß",
             "4", "4", "4", "Ä", "0", "", "", "Ö", "0", "", "", "Ü", "0", "", "",
             " ", "", "", "", "", "", "", ""
@@ -85,10 +87,15 @@ public class DaitchMokotoff implements Coder {
         String lastSound = null;
         StringBuilder result = new StringBuilder();
 
-        String in = input.toUpperCase() + "*";
+        String in = input.toUpperCase(Locale.ROOT) + "*";
 
-        while ((daimok_rules[n].length() > 0) && (in.length() > 0)) {
-            if (in.regionMatches(pos, daimok_rules[n], 0,
+        /* the trailing "*" is only a sentinel for the look-ahead */
+        while (pos < (in.length() - 1)) {
+            if (daimok_rules[n].length() == 0) {
+                /* no rule for this character: skip it */
+                pos++;
+                n = 0;
+            } else if (in.regionMatches(pos, daimok_rules[n], 0,
                         daimok_rules[n].length())) {
                 /* check the position of the sound */
                 if (pos == 0) {

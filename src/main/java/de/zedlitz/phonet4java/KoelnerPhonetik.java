@@ -20,6 +20,8 @@
  */
 package de.zedlitz.phonet4java;
 
+import java.util.Locale;
+
 
 /**
  *
@@ -41,7 +43,7 @@ public class KoelnerPhonetik implements Coder {
             return "";
         }
 
-        String word = input.toLowerCase();
+        String word = input.toLowerCase(Locale.ROOT);
 
         StringBuilder code = new StringBuilder();
         boolean beginningOfWord = true;
@@ -113,10 +115,8 @@ public class KoelnerPhonetik implements Coder {
                     } else if (isNextLetter(word, i, 'a') ||
                             isNextLetter(word, i, 'h') ||
                             isNextLetter(word, i, 'k') ||
-                            isNextLetter(word, i, 'l') ||
                             isNextLetter(word, i, 'o') ||
                             isNextLetter(word, i, 'q') ||
-                            isNextLetter(word, i, 'r') ||
                             isNextLetter(word, i, 'u') ||
                             isNextLetter(word, i, 'x')) {
                         code.append(4);
@@ -124,11 +124,10 @@ public class KoelnerPhonetik implements Coder {
                         code.append(8);
                     }
                 }
-            } /*else if ((c == ' ') || (c == '-') || (c == '/') || (c == ',')) {
-                beginningOfWord = true;
-            }   */
+            }
 
-            beginningOfWord = false;
+            // a new word starts after a space, hyphen, etc.
+            beginningOfWord = !Character.isLetter(c);
         }
 
         // remove duplicates

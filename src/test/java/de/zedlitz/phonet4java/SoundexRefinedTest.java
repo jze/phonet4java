@@ -22,6 +22,8 @@ package de.zedlitz.phonet4java;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -58,4 +60,8 @@ public class SoundexRefinedTest extends AbstractTestBase<SoundexRefined> {
         assertEquals("B6000",phonet.code("Boot"));
     }
 
+    @Test
+    public void testTurkishLocale() {
+        withDefaultLocale(Locale.forLanguageTag("tr-TR"), () -> assertEquals("S8600", phonet.code("smith")));
+    }
 }

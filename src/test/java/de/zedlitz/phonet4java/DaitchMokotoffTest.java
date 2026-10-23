@@ -23,6 +23,8 @@ package de.zedlitz.phonet4java;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -68,5 +70,21 @@ public class DaitchMokotoffTest extends AbstractTestBase<DaitchMokotoff> {
         checkSimilarCoding("876450", new String[]{"LEWINSKY", "LEVINSKI", "Levinsky"});
     }
 
+    @Test
+    public void testLetterU() {
+        assertEquals("593000", phonet.code("Kurt"));
+        assertEquals("094800", phonet.code("Ursula"));
+        assertEquals("484000", phonet.code("Schulz"));
+    }
 
+    @Test
+    public void testUnknownCharacterInsideWord() {
+        assertEquals("079600", phonet.code("O'Brien"));
+        assertEquals("689836", phonet.code("Müller-Lüdenscheidt"));
+    }
+
+    @Test
+    public void testTurkishLocale() {
+        withDefaultLocale(Locale.forLanguageTag("tr-TR"), () -> assertEquals("560000", phonet.code("kim")));
+    }
 }

@@ -176,4 +176,11 @@ public class Phonet1Test extends AbstractTestBase<Phonet1> {
     public void testSchulzIII() {
         assertEquals("SHULS Ⅲ", coder.code("Schulz Ⅲ"));
     }
+
+    @Test
+    public void testLigatureAndCaron() {
+        checkSimilarCoding("SHIMON", new String[]{"Šimon", "šimon"});
+        checkSimilarCoding("ÖWRE", new String[]{"Œuvre", "œuvre"});
+        assertEquals("I", coder.code("Ÿ"));
+    }
 }

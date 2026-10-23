@@ -29,8 +29,8 @@ package de.zedlitz.phonet4java;
 public class Phonet {
     private static final String[] phonet_rules = PhoneticRules.phonet_rules_german;
     private static final int HASH_COUNT = 512;
-    private static final String umlaut_upper = "ÀÁÂÃÅÄÆÇÐÈÉÊËÌÍÎÏÑÒÓÔÕÖØßÞÙÚÛÜÝŸ";
-    private static final String umlaut_lower = "àáâãåäæçðèéêëìíîïñòóôõöøßþùúûüýÿ";
+    private static final String umlaut_upper = "ÀÁÂÃÅÄÆÇÐÈÉÊËÌÍÎÏÑÒÓÔÕÖØŒßŠÞÙÚÛÜÝŸ";
+    private static final String umlaut_lower = "àáâãåäæçðèéêëìíîïñòóôõöøœßšþùúûüýÿ";
     private static final String letters_a_to_z = "abcdefghijklmnopqrstuvwxyz";
     private static final String letters_A_to_Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final char INVALID_CHARACTER = '_';

@@ -17,6 +17,8 @@
 
 package de.zedlitz.phonet4java;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -56,5 +58,18 @@ public abstract class AbstractTestBase<C extends Coder> {
             assertEquals(expected, coder.code(input));
         }
 
+    }
+
+    /**
+     * Run some code with a different default locale and restore the old one afterwards.
+     */
+    protected static void withDefaultLocale(Locale locale, Runnable runnable) {
+        Locale old = Locale.getDefault();
+        try {
+            Locale.setDefault(locale);
+            runnable.run();
+        } finally {
+            Locale.setDefault(old);
+        }
     }
 }

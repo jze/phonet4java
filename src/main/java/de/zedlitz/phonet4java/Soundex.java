@@ -20,6 +20,8 @@
  */
 package de.zedlitz.phonet4java;
 
+import java.util.Locale;
+
 
 /**
  * @author Jesper Zedlitz &lt;jze@informatik.uni-kiel.de&gt;
@@ -49,7 +51,7 @@ public class Soundex implements Coder {
         int count;
         int scount;
 
-        String in = input.toUpperCase().replace('Ä', 'A').replace('Ö', 'O')
+        String in = input.toUpperCase(Locale.ROOT).replace('Ä', 'A').replace('Ö', 'O')
         .replace('Ü', 'U').replace('ß', 's');
 
         try {

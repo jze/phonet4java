@@ -22,6 +22,8 @@ package de.zedlitz.phonet4java;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -144,5 +146,21 @@ public class KoelnerPhonetikTest extends AbstractTestBase<KoelnerPhonetik> {
                 {"Xanthippe", "48621"},
                 {"Zacharias", "8478"}};
         checkCoding(data);
+    }
+
+    @Test
+    public void testCBeforeLAndRInsideWord() {
+        // L and R only lead to "4" if the C is at the beginning of the word
+        assertEquals("085", phonet.code("Acl"));
+        assertEquals("087", phonet.code("Acr"));
+        assertEquals("457", phonet.code("Clara"));
+        assertEquals("475", phonet.code("Crell"));
+        assertEquals("06457", phonet.code("Anna-Clara"));
+        assertEquals("0685", phonet.code("Anna Acla"));
+    }
+
+    @Test
+    public void testTurkishLocale() {
+        withDefaultLocale(Locale.forLanguageTag("tr-TR"), () -> assertEquals("076", phonet.code("IRMA")));
     }
 }

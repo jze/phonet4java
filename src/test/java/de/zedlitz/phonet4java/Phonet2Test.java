@@ -102,5 +102,10 @@ public class Phonet2Test extends AbstractTestBase<Phonet2> {
         assertEquals("KRAUZE", coder.code("Krauße"));
     }
 
-
+    @Test
+    public void testLigatureAndCaron() {
+        checkSimilarCoding("ZINUN", new String[]{"Šimon", "šimon"});
+        checkSimilarCoding("ÖFRE", new String[]{"Œuvre", "œuvre"});
+        assertEquals("I", coder.code("Ÿ"));
+    }
 }
