@@ -24,7 +24,7 @@ To use the library you can simply add a dependency to `phonet4java` like this:
 	<dependency>
 		<groupId>de.zedlitz</groupId>
 		<artifactId>phonet4java</artifactId>
-		<version>1.2.0</version>
+		<version>1.3.0</version>
 	</dependency>
 
 ## Example
@@ -42,7 +42,6 @@ Here are some example to get an impression how the different algorithms work:
 | Mayer | M600 | M9000 | 619000 | 67 | MEIA | NEIA | 
 | Kiew | K000 | K0000 | 570000 | 43 | KIF | KIF | 
 | Kyjiw | K200 | K4000 | 517000 | 43 | KÜIF | KIF | 
-| Kyiv | K100 | K2000 | 570000 | 43 | KÜIF | KIF | 
 | Kyiv | K100 | K2000 | 570000 | 43 | KÜIF | KIF | 
 | Kiev | K100 | K2000 | 570000 | 43 | KIW | KIF | 
 | Szczypiorskowski | S162 | S5351 | 279457 | 81784384 | SHÜPIORSKOFSKI | ZIPIURZKUFZKI | 
