@@ -45,7 +45,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.22.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.2.7</version>
+                <version>3.2.8</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -69,11 +69,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <phase>deploy</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
@@ -87,7 +86,6 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <phase>deploy</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -113,6 +111,14 @@
                         </goals>
                     </execution>
                 </executions>
+      </plugin>      
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.23.0</version>
+        <configuration>
+          <rulesUri>file:///${project.basedir}/rules.xml</rulesUri>
+        </configuration>
             </plugin>
             <plugin>
                <groupId>org.sonatype.central</groupId>
@@ -122,14 +128,6 @@
                <configuration>
                    <publishingServerId>central</publishingServerId>
                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.23.0</version>
-                <configuration>
-                    <rulesUri>file:///${project.basedir}/rules.xml</rulesUri>
-                </configuration>
             </plugin>
         </plugins>
     </build>
